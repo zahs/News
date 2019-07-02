@@ -35,7 +35,6 @@ class NewsViewController: UIViewController {
         cellsCountPerPage = Int((collectionViewSize.height / CGFloat(CELL_HEIGHT)).rounded())
         self.newsSegmentControl.setTitle("All", forSegmentAt: 0)
         self.newsSegmentControl.setTitle("Top", forSegmentAt: 1)
-        self.newsSegmentControl.setTitle("Sources", forSegmentAt: 2)
         newsSegmentIndexChanged(self)
     }
 
@@ -124,10 +123,6 @@ extension NewsViewController {
             networkManager.getTopNews(page: page, pageSize: pageSize, params: params) { (news, error) in
                 self.displayResponseData(newsResponse: news, error: error)
             }
-        case 2:
-            networkManager.getSources(page: page, pageSize: pageSize, params: params) { (news, error) in
-                self.displayResponseData(newsResponse: news, error: error)
-            }
         default:
             print("No page is available")
         }
@@ -142,10 +137,6 @@ extension NewsViewController {
             
         case 1:
             return ["country" : CountryCode.us.rawValue,
-                    "pageSize": "\(pageSize)",
-                    "page": "\(page)"]
-        case 2:
-            return ["category" : Category.science.rawValue,
                     "pageSize": "\(pageSize)",
                     "page": "\(page)"]
         default:
